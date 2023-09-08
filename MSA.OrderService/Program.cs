@@ -1,6 +1,8 @@
 using MSA.OrderService.Domain;
 using MSA.OrderService.Infrastructure.Data;
 using MSA.Common.PostgresMassTransit.PostgresDB;
+using MSA.OrderService.Services;
+using MSA.Common.PostgresMassTransit.MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
      .AddPostgres<MainDbContext>()
      .AddPostgresRepositories<MainDbContext, Order>()
-     .AddPostgresUnitofWork<MainDbContext>();
+     .AddPostgresRepositories<MainDbContext, Product>()
+     .AddPostgresUnitofWork<MainDbContext>()
+     .AddMassTransitWithRabbitMQ();
+
+builder.Services.AddHttpClient<IProductService, ProductService>(cfg => {
+    cfg.BaseAddress = new Uri("https://localhost:5002");
+});
 
 builder.Services.AddControllers(opt => {
     opt.SuppressAsyncSuffixInActionNames = false;

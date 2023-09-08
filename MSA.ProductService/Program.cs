@@ -1,11 +1,12 @@
 using MSA.Common.Mongo.Extensions;
 using MSA.ProductService.Entities;
-
+using MSA.Common.PostgresMassTransit.MassTransit;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddMongo()
-                .AddRepositories<Product>("Product");
+                .AddRepositories<Product>("Product")
+                .AddMassTransitWithRabbitMQ();
 
 builder.Services.AddControllers(options => {
     options.SuppressAsyncSuffixInActionNames = false;
