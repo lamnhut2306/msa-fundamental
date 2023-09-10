@@ -19,7 +19,7 @@ public static class Extensions
                 var serviceSetting = configuration.GetSection(nameof(ServiceSetting)).Get<ServiceSetting>();
                 var rabitMQSetting = configuration.GetSection(nameof(RabbitMqSetting)).Get<RabbitMqSetting>();
                 configurator.Host(rabitMQSetting.Host);
-                configurator.ConfigureEndpoints(context, 
+                configurator.ConfigureEndpoints(context,
                     new KebabCaseEndpointNameFormatter(serviceSetting.ServiceName, false));
                 configurator.UseMessageRetry(retryPoilicy => {
                     retryPoilicy.Interval(3, TimeSpan.FromSeconds(10));
@@ -43,7 +43,7 @@ public static class Extensions
                 var serviceSetting = configuration.GetSection(nameof(ServiceSetting)).Get<ServiceSetting>();
                 var rabitMQSetting = configuration.GetSection(nameof(RabbitMqSetting)).Get<RabbitMqSetting>();
                 configurator.Host(rabitMQSetting.Host);
-                configurator.ConfigureEndpoints(context, 
+                configurator.ConfigureEndpoints(context,
                     new KebabCaseEndpointNameFormatter(serviceSetting.ServiceName, false));
                 configurator.UseMessageRetry(retryPoilicy => {
                     retryPoilicy.Interval(3, TimeSpan.FromSeconds(10));

@@ -1,13 +1,11 @@
-using System;
+﻿using System;
 
 using MassTransit;
-using MassTransit.EntityFrameworkCoreIntegration;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 using MSA.Common.Contracts.Settings;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MSA.Common.PostgresMassTransit.PostgresDB;
 
