@@ -1,6 +1,7 @@
 using MassTransit;
 using MassTransit.Transports;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MSA.Common.Contracts.Domain;
 using MSA.Common.Contracts.Events.Product;
@@ -11,6 +12,7 @@ namespace MSA.ProductService.Controllers;
 
 [ApiController]
 [Route("v1/product")]
+[Authorize]
 public class ProductController : ControllerBase
 {
     private readonly ILogger<ProductController> _logger;
@@ -28,6 +30,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize("read_access")]
     public async Task<IEnumerable<ProductDto>> GetAsync()
     {
         var products = (await _repository.GetAllAsync())
