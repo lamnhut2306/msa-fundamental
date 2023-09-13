@@ -1,7 +1,10 @@
 using Duende.IdentityServer.Test;
+using Microsoft.IdentityModel.Logging;
+
 using MSA.IdentityService.DummyData;
 
 var builder = WebApplication.CreateBuilder(args);
+IdentityModelEventSource.ShowPII = true;
 
 // Add services to the container.
 builder.Services.AddIdentityServer(options => {

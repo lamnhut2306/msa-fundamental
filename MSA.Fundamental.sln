@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSA.ProductService", "MSA.P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSA.OrderService", "MSA.OrderService\MSA.OrderService.csproj", "{D22F8F8B-37F0-4588-A20F-E62C30E21778}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSA.IdentityServer", "MSA.IdentityServer\MSA.IdentityServer.csproj", "{7B785B4F-914D-45D9-B092-FCAD1624F1C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSA.IdentityServer", "MSA.IdentityServer\MSA.IdentityServer.csproj", "{7B785B4F-914D-45D9-B092-FCAD1624F1C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSA.Common.Security", "MSA.Common.Security\MSA.Common.Security.csproj", "{EACF0692-08C7-4D91-BD5C-37EBC84DCA93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSA.Common.Security", "MSA.Common.Security\MSA.Common.Security.csproj", "{EACF0692-08C7-4D91-BD5C-37EBC84DCA93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSA.ReverseProxy", "MSA.ReverseProxy\MSA.ReverseProxy.csproj", "{2F9C999C-A9D0-4303-8673-4F749C038D94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{EACF0692-08C7-4D91-BD5C-37EBC84DCA93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EACF0692-08C7-4D91-BD5C-37EBC84DCA93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EACF0692-08C7-4D91-BD5C-37EBC84DCA93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F9C999C-A9D0-4303-8673-4F749C038D94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F9C999C-A9D0-4303-8673-4F749C038D94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F9C999C-A9D0-4303-8673-4F749C038D94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F9C999C-A9D0-4303-8673-4F749C038D94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

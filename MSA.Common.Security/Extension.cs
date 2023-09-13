@@ -21,6 +21,11 @@ public static class Extensions
                 options.Authority = srvUrlsSetting.IdentityServiceUrl;
                 options.RequireHttpsMetadata = false;
 
+                options.BackchannelHttpHandler = new HttpClientHandler()
+                {
+                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                };
+
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
                     ValidateIssuer = true,
