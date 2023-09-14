@@ -5,7 +5,11 @@
 @scope=productapi.read
 @client_secret=511536EF-F270-4058-80CA-1C89C192F69A
 @grant_type=client_credentials
-@token=eyJhbGciOiJSUzI1NiIsImtpZCI6IkVCMDU1RTQ2RTQ4NzJFNDA2NjQ2NjVFODE2ODJGRENEIiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo4MDgwIiwibmJmIjoxNjk0NTc3MzkyLCJpYXQiOjE2OTQ1NzczOTIsImV4cCI6MTY5NDU4MDk5MiwiYXVkIjpbInByb2R1Y3RhcGkiLCJodHRwczovL2xvY2FsaG9zdDo4MDgwL3Jlc291cmNlcyJdLCJzY29wZSI6WyJwcm9kdWN0YXBpLnJlYWQiXSwiY2xpZW50X2lkIjoibTJtLmNsaWVudCIsImp0aSI6IjlGMDE3NEFCNDE1NUE4QUM5RTNBM0I3NDQzNDE3RjI5In0.Q57Lus_qSpuUXUt5Cyz5PMCj_2dJYIHG6CH79JulYHR-VnRAjz1i_6fQ1lFcWHKqe5VJAOy3kjp7nTIS4SJJ48tf9U_ahnZlrLipJFUG7bDeEyMMsgdxBZ_r-P3xHWrGmCLAFzkqM6op1D2Ph16JQBwX2amcFSMvAz1IpZFKoK-G-uBdxWzsxpW6WVDzSmHg-lrle8HccZR5Kq4yiyqLsxwLp53b3a64iifsjLFigJDFqG5soQyv_53OSq_ln4KLETOncBkk8sAVLOzChuo77xW4Pws2aES4W71OFiTMoofw5hoSo01nPmHd-k164EgxE8PxKzrZbXbQPH-Z4L8zZg
+@token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ3MTlCQjczMDRBNDFFMEQwRkNDNzYzMTBENUMxRkM3IiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo4MDgwIiwibmJmIjoxNjk0NjczNTc1LCJpYXQiOjE2OTQ2NzM1NzUsImV4cCI6MTY5NDY3NzE3NSwiYXVkIjpbInByb2R1Y3RhcGkiLCJodHRwczovL2xvY2FsaG9zdDo4MDgwL3Jlc291cmNlcyJdLCJzY29wZSI6WyJwcm9kdWN0YXBpLnJlYWQiXSwiY2xpZW50X2lkIjoibTJtLmNsaWVudCIsImp0aSI6IjkwNTk2RERGRTNFMzc0RTAzMzU4ODM2MTQ0MUREREFEIn0.QsLcvsECUgL6lr_eNxb9963uiKUw-V5FUAUlPHG0W2Y5gdIXZpVJFiN5t7-IPP3qoC8jjDu65eh1o918TH02MRB5Xw9CLvXgHXiVa4bgv8m5nnIzXXAh4ezzwRTSWH-AG-NI1IlALIEpATs7hIo2aeSZRsOmZ1FQo3q95-3LCddQhKSotTMFjFNe0qscOPMBqQbdX1beJyao1kGrdnHRp8gtNlAdQMD3sCAtgUcOEGbIX1zL7ZKWQH9dr4RezY7qnLtHrrzbsNl53a5meOJX4S0E8f0AbpJJRGG06ZaZeIS5OQfw3R5Sp73ROKBHVs48fCSIjqtLYlXxzwZSWZv1Ag
+@userId=8d7811e8-05ea-40c9-97be-ac80c338cb55
+@productId=8d7811e8-05ea-40c9-97be-ac80c338cb55
+@orderId=68dd936e-769e-490b-b1ff-5fddaa03f8a8
+@paymentStatus=Succeeded
 ###
 POST https://{{host}}/identity-api/connect/token HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
@@ -20,3 +24,30 @@ client_id={{client_id}}
 GET https://{{host}}/product-api/v1/product HTTP/1.1
 Authorization: bearer {{token}}
 Accept: */*
+
+### Send request to post Order
+POST https://{{host}}/order-api/v1/order HTTP/1.1
+Authorization: bearer {{token}}
+Accept: */*
+Content-Type: application/json
+
+{
+  "userId": "{{userId}}",
+  "orderId": "{{orderId}}"
+}
+
+### Verify order status
+
+### Send request to post Payment
+POST https://{{host}}/bank-api/v1/payment HTTP/1.1
+Authorization: bearer {{token}}
+Accept: */*
+Content-Type: application/json
+
+{
+  "orderId": "{{orderId}}",
+  "status": "{{paymentStatus}}"
+}
+
+
+### Verify order status
