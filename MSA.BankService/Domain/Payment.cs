@@ -8,6 +8,6 @@ namespace MSA.BankService.Domain
 
         public Guid OrderId { get; set; }
 
-        public string Status { get; set; }
+        public string Status { get; set; } = "Succeeded";
     }
 }

@@ -63,7 +63,8 @@ public class OrderController : ControllerBase
         };
         await _orderRepository.CreateAsync(order);
 
-        /*await _publishEndpoint.Publish(new ValidateProduct {
+        /*await _publishEndpoint.Publish(new ValidateProduct
+        {
             OrderId = order.Id,
             ProductId = createOrderDto.ProductId
         });*/
