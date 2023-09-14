@@ -139,6 +139,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ReverseProxy__Clusters__identityApiCluster__Destinations__destination1__Address=https://identity-service:5001/
       - ReverseProxy__Clusters__productApiCluster__Destinations__destination1__Address=https://product-service:5002/
+      - ReverseProxy__Clusters__orderApiCluster__Destinations__destination1__Address=https://order-service:5003/
+      - ReverseProxy__Clusters__bankApiCluster__Destinations__destination1__Address=https://bank-service:5004/
       - ASPNETCORE_URLS=https://+:8080;http://+:18080
       - Kestrel__Certificates__Default__Password=MsaFundamental
       - Kestrel__Certificates__Default__Path=https/localhost.pfx

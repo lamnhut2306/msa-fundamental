@@ -86,7 +86,7 @@ public class OrderStateMachine
                 .Then(x => Console.WriteLine($"Pay Succeeded for OrderId {x.Message.OrderId}"))
                 .Then(x => {
                     x.Saga.PaymentId = x.Message.PaymentId;
-                    x.Saga.Reason = $"Pay Succeeded for OrderId {x.Message.OrderId}";
+                    x.Saga.Reason += $"Pay Succeeded for OrderId {x.Message.OrderId}";
                 })
                 .Publish(context => new OrderCompleted()
                 {
