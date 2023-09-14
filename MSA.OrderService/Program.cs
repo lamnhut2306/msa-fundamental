@@ -10,6 +10,9 @@ using MSA.OrderService.Infrastructure.Saga;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using MSA.Common.Contracts.Settings;
+using MSA.Common.Security.Authentication;
+using MSA.Common.Security.Authorization;
+using MSA.OrderService;
 
 var builder = WebApplication.CreateBuilder(args);
 var serviceSetting = builder.Configuration.GetSection(nameof(PostgresDbSetting)).Get<PostgresDbSetting>();
@@ -19,23 +22,30 @@ builder.Services
 .AddPostgres<MainDbContext>()
 .AddPostgresRepositories<MainDbContext, Order>()
 .AddPostgresRepositories<MainDbContext, Product>()
-     .AddPostgresUnitofWork<MainDbContext>()
-     //.AddMassTransitWithRabbitMQ();
-     .AddMassTransitWithPostgresOutbox<MainDbContext>(cfg => {
-         cfg.AddSagaStateMachine<OrderStateMachine, OrderState>()
-            .EntityFrameworkRepository(r => {
-                 r.ConcurrencyMode = ConcurrencyMode.Pessimistic;
-         
-                 r.LockStatementProvider = new PostgresLockStatementProvider();
-         
-                 r.AddDbContext<DbContext, OrderStateDbContext>((provider, builder) => {
-                     builder.UseNpgsql(serviceSetting.ConnectionString, n => {
-                         n.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
-                         n.MigrationsHistoryTable($"__{nameof(OrderStateDbContext)}");
-                         });
-                     });
-            });
+.AddPostgresUnitofWork<MainDbContext>()
+//.AddMassTransitWithRabbitMQ();
+.AddMassTransitWithPostgresOutbox<MainDbContext>(cfg => {
+    cfg.AddSagaStateMachine<OrderStateMachine, OrderState>()
+       .EntityFrameworkRepository(r => {
+            r.ConcurrencyMode = ConcurrencyMode.Pessimistic;
+    
+            r.LockStatementProvider = new PostgresLockStatementProvider();
+    
+            r.AddDbContext<DbContext, OrderStateDbContext>((provider, builder) => {
+                builder.UseNpgsql(serviceSetting.ConnectionString, n => {
+                    n.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().Name);
+                    n.MigrationsHistoryTable($"__{nameof(OrderStateDbContext)}");
+                    });
+                });
+       });
+})
+.AddMSAAuthentication()
+.AddMSAAuthorization(opt => { 
+     opt.AddPolicy("read_access", policy =>
+     {
+         policy.RequireClaim("scope", "orderapi.read");
      });
+});
 
 builder.Services.AddHttpClient<IProductService, ProductService>(cfg => {
     cfg.BaseAddress = new Uri("https://localhost:5002");
@@ -48,7 +58,9 @@ builder.Services.AddControllers(opt => {
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger(builder.Configuration);
+
 
 var app = builder.Build();
 
@@ -56,11 +68,16 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.OAuthClientId("order-swagger");
+        options.OAuthScopes("profile", "openid");
+    });
 }
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

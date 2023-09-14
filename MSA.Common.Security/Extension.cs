@@ -40,7 +40,8 @@ public static class Extensions
                         "https://identity-api:5001/resources",
                         "https://localhost:5001/resources",
                         "productapi",
-                        "orderapi"
+                        "orderapi",
+                        "bankapi"
                     }
                 };
             });

@@ -1,5 +1,6 @@
 using MassTransit;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using MSA.BankService.Data;
@@ -12,6 +13,7 @@ using MSA.Common.PostgresMassTransit.PostgresDB;
 namespace BankService.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("v1/payment")]
     public class PaymentController : ControllerBase
     {
@@ -40,6 +42,7 @@ namespace BankService.Controllers
         }
 
         [HttpPost]
+        [Authorize("read_access")]
         public async Task<ActionResult<Payment>> PostAsync(CreatePaymentDto createPayment)
         {
             var payment = new Payment()

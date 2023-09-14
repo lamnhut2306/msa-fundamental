@@ -9,10 +9,12 @@ using MSA.Common.Contracts.Commands.Product;
 using MassTransit;
 using MassTransit.Transports;
 using MSA.Common.Contracts.Events.Order;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MSA.OrderService.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("v1/order")]
 public class OrderController : ControllerBase
 {
@@ -49,6 +51,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize("read_access")]
     public async Task<ActionResult<Order>> PostAsync(CreateOrderDto createOrderDto)
     {
         // var product = await _productRepository.GetAsync(item => item.ProductId == createOrderDto.ProductId);

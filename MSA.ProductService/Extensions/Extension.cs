@@ -27,9 +27,9 @@ namespace MSA.ProductService.Extensions
                              TokenUrl = new Uri($"{srvUrlsSetting.IdentityServiceUrl}/connect/token"),
                              Scopes = new Dictionary<string, string>
                              {
-                                                                 { "productapi.read", "Access read operations" },
+                                 { "productapi.read", "Access read operations" },
                                  { "productapi.write", "Access write operations" }
-                                                             }
+                             }
                          }
                      },
                      Type = SecuritySchemeType.OAuth2
@@ -38,15 +38,14 @@ namespace MSA.ProductService.Extensions
                  options.AddSecurityDefinition("OAuth", scheme);
 
                  options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                                 {
-                                         {
-                                    new OpenApiSecurityScheme
-                                                 {
-                                        Reference = new OpenApiReference { Id = "OAuth", Type = ReferenceType.SecurityScheme }
-                                                     },
-            new List<string> { }
-                     }
-                                     });
+                 {
+                    {
+                        new OpenApiSecurityScheme {
+                            Reference = new OpenApiReference { Id = "OAuth", Type = ReferenceType.SecurityScheme }
+                        },
+                        new List<string> { }
+                    }
+                 });
              });
         }
     }
